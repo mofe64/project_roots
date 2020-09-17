@@ -29,7 +29,7 @@ const handleJWTExpiredError = () =>
 const sendErrorDev = (err, req, res) => {
   //error handling for api
   if (req.originalUrl.startsWith('/api')) {
-    res.status(err.statusCode).json({
+    return res.status(err.statusCode).json({
       status: err.status,
       error: err,
       message: err.message,
@@ -50,14 +50,14 @@ const sendErrorProd = (err, req, res) => {
   if (req.originalUrl.startsWith('/api')) {
     //operational errors
     if (err.isOperational) {
-      res.status(err.statusCode).json({
+      return res.status(err.statusCode).json({
         status: err.status,
         message: err.message,
       });
     }
     //internal errors
     console.error('Error', err);
-    res.status(500).json({
+    return res.status(500).json({
       status: 'error',
       message: 'Looks like something went wrong',
       statusCode: err.statusCode,

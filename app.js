@@ -9,7 +9,8 @@ const session = require('express-session');
 const passport = require('passport');
 
 //routers
-//
+const userRouter = require('./routers/userRoutes');
+
 //
 
 const app = express();
@@ -55,6 +56,11 @@ app.use((req, res, next) => {
 });
 
 //routes
+app.use('/api/v1/user', userRouter);
+
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server`));
+});
 
 //setup global error handling
 app.use(globalErrorHandler);
