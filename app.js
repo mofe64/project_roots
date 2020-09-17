@@ -2,9 +2,15 @@ const express = require('express');
 const path = require('path');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
+const AppError = require('./util/AppError');
+const globalErrorHandler = require('./controllers/errorController');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
+
+//routers
+//
+//
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -47,5 +53,10 @@ app.use((req, res, next) => {
   res.locals.error = req.flash('error');
   next();
 });
+
+//routes
+
+//setup global error handling
+app.use(globalErrorHandler);
 
 module.exports = app;
