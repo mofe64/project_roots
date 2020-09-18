@@ -10,6 +10,8 @@ const passport = require('passport');
 
 //routers
 const userRouter = require('./routers/userRoutes');
+const categoryRouter = require('./routers/categoryRouter');
+const accountRouter = require('./routers/accountRouter');
 
 //
 
@@ -57,6 +59,8 @@ app.use((req, res, next) => {
 
 //routes
 app.use('/api/v1/user', userRouter);
+app.use('/api/v1/category', categoryRouter);
+app.use('/api/v1/account', accountRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`));

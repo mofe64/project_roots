@@ -16,7 +16,19 @@ const expenseSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Account',
   },
+  date: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
-const Expense = mongoose.model('Income', expenseSchema);
+expenseSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'category',
+    select: 'name',
+  });
+  next();
+});
+
+const Expense = mongoose.model('Expense', expenseSchema);
 module.exports = Expense;
