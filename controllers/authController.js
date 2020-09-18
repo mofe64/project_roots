@@ -1,4 +1,5 @@
 const User = require('../models/UserModel');
+const Account = require('../models/AccountModel');
 const AppError = require('../util/AppError');
 const catchAsync = require('../util/CatchAsync');
 const JWT = require('jsonwebtoken');
@@ -29,6 +30,11 @@ exports.register = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
     email: req.body.email,
   });
+  const userAccount = new Account({
+    user: newUser._id,
+    accountOwner: `${newUser.firstname} ${newUser.lastname}`,
+  });
+  await userAccount.save();
   createAndSendToken(newUser, 201, res);
 });
 

@@ -16,6 +16,23 @@ const incomeSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Account',
   },
+  status: {
+    type: String,
+    enum: ['one-time', 'recurring'],
+    default: 'one-time',
+  },
+  date: {
+    type: Date,
+    default: Date.now(),
+  },
+});
+
+incomeSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'category',
+    select: 'name',
+  });
+  next();
 });
 
 const Income = mongoose.model('Income', incomeSchema);
