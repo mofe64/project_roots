@@ -1,31 +1,36 @@
 const mongoose = require('mongoose');
 
-const incomeSchema = new mongoose.Schema({
-  amount: {
-    type: Number,
-    required: [true, 'Please provide an amount'],
+const incomeSchema = new mongoose.Schema(
+  {
+    amount: {
+      type: Number,
+      required: [true, 'Please provide an amount'],
+    },
+    description: {
+      type: String,
+    },
+    category: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Category',
+    },
+    account: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Account',
+    },
+    status: {
+      type: String,
+      enum: ['one-time', 'recurring'],
+      default: 'one-time',
+    },
+    date: {
+      type: Date,
+      default: Date.now(),
+    },
   },
-  description: {
-    type: String,
-  },
-  category: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Category',
-  },
-  account: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Account',
-  },
-  status: {
-    type: String,
-    enum: ['one-time', 'recurring'],
-    default: 'one-time',
-  },
-  date: {
-    type: Date,
-    default: Date.now(),
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 incomeSchema.pre(/^find/, function (next) {
   this.populate({

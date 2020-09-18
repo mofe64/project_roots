@@ -2,6 +2,7 @@ const Category = require('../models/CategoryModel');
 const catchAsync = require('../util/CatchAsync');
 const AppError = require('../util/AppError');
 
+//TODO CREATE NEW BILLS CATEGORY
 exports.createCategory = catchAsync(async (req, res, next) => {
   const newCategory = await Category.create({
     name: req.body.name,
