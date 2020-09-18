@@ -49,6 +49,11 @@ const userSchema = new mongoose.Schema(
       default: true,
       //select: false,
     },
+    totalIncomeForLastMonth: {
+      type: Number,
+      default: 0,
+    },
+    incomeFlowReport: [String],
   },
   {
     toJSON: { virtuals: true },
